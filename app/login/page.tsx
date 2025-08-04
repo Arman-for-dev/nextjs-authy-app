@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginWithCredentials } from "./action";
+import { useRouter } from "next/navigation";
 
 
 
@@ -17,14 +18,10 @@ const formSchema = z.object({
     password: passwordSchema
 });
 
-const handleSubmit = async (data: z.infer<typeof formSchema>) => {
-    await loginWithCredentials({
-        email: data.email,
-        password: data.password
-    })
-}
+
 
 export default function Login() {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues:{
@@ -32,6 +29,19 @@ export default function Login() {
             password:""
         }
       });
+
+      const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+    const response = await loginWithCredentials({
+        email: data.email,
+        password: data.password
+    });
+
+    if(response?.error){
+
+    }else{
+        router.push("/my-dashboard");
+    }
+}
       
     return (
         <main className="flex justify-center items-center min-h-screen">
@@ -68,7 +78,7 @@ export default function Login() {
                                         <FormMessage />
                                     </FormItem>
                                 )}/>
-                                <Button type="submit">Login</Button>
+                                <Button className="cursor-pointer" type="submit">Login</Button>
                             </fieldset>
                         </form>
                     </Form>

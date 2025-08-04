@@ -95,7 +95,7 @@ function Register() {
                                         <FormMessage />
                                     </FormItem>
                                 )}/>
-                                <Button type="submit">Register</Button>
+                                <Button className="cursor-pointer" type="submit">Register</Button>
                             </fieldset>
                         </form>
                     </Form>

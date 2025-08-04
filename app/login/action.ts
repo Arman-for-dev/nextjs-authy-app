@@ -32,8 +32,8 @@ export const loginWithCredentials = async ({
             password,
             redirect: false
         })
-    } catch (error) {
-        
+    } catch (e) {
+        console.log(e)
     }
 
 }
